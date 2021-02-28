@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     TextView textView;
     String jString;
     JSONObject reader;
+    JSONArray wordList;
 
 
 
@@ -46,19 +47,20 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             reader = new JSONObject();
-            reader.put("dictionary",jString);
-            JSONArray wordList =  (JSONArray) reader.getJSONArray("dictionary");
+            wordList =  (JSONArray) reader.getJSONArray("dictionary");
+            Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
             for(int i=0; i < wordList.length(); i++){
                 JSONObject jsonObject = wordList.getJSONObject(i);
                 String English = jsonObject.get("en").toString().toUpperCase();
                 String Bangla = jsonObject.get("bn").toString().toUpperCase();
-                Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
+
                 dictionary.put(English, Bangla);
 
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        textView.setText(wordList.length());
 
 
 
