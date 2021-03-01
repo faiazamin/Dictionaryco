@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+    // declare variables
     PerfectHash perfectHash ;
     HashMap<String,String> dictionary;
     File file ;
@@ -46,15 +47,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)   {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //file = new File(this.getFilesDir(),FILE_NAME);
+        //initialize vaeiable
         dictionary = new HashMap<String, String>();
         textView =  (TextView) findViewById(R.id.meaning_display_text);
         editText = (EditText) findViewById(R.id.edit_text_english);
         searchButton = (Button) findViewById(R.id.button_search);
 
+        // Load string from json file
         jString = loadJSONFromAsset();
-        loadDictionary(jString);
 
+        // Load dictionary from string
+        loadDictionary(jString);
+        // initialize hash function
         initHash();
 
 
@@ -62,7 +66,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String englishWord = editText.getText().toString().toUpperCase();
+
+                // Look for the english word and then get the corresponding bangla word.
                 String banglaWord = perfectHash.Lookup(englishWord.trim());
+                //show bangla word
                 textView.setText(banglaWord);
             }
         });
