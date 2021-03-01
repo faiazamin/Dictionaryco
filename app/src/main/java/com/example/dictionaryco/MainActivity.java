@@ -46,25 +46,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //file = new File(this.getFilesDir(),FILE_NAME);
+        dictionary = new HashMap<String, String>();
         textView =  (TextView) findViewById(R.id.meaning_display_text);
+
         jString = loadJSONFromAsset();
+        loadDictionary(jString);
 
-        try {
-            reader = new JSONObject(jString);
-            wordList =  (JSONArray) reader.getJSONArray("dictionary");
-            Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
-            for(int i=0; i < wordList.length(); i++){
-                JSONObject jsonObject = wordList.getJSONObject(i);
-                String English = jsonObject.get("en").toString().toUpperCase();
-                String Bangla = jsonObject.get("bn").toString().toUpperCase();
+        perfectHash = new PerfectHash(dictionary);
+        perfectHash.CreateMinimalPerfectHash();
 
-                dictionary.put(English, Bangla);
-
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        textView.setText(wordList.length());
+        textView.setText(perfectHash.Lookup("Rahat").toString());
 
 
 
@@ -92,5 +83,25 @@ public class MainActivity extends AppCompatActivity {
         }
         return jString;
 
+    }
+
+    private void loadDictionary ( String jString){
+        try {
+            reader = new JSONObject(jString);
+            wordList =  (JSONArray) reader.getJSONArray("dictionary");
+            Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
+            for(int i=0; i < wordList.length(); i++){
+                JSONObject jsonObject = wordList.getJSONObject(i);
+                String English = jsonObject.get("en").toString().toUpperCase();
+                String Bangla = jsonObject.get("bn").toString().toUpperCase();
+
+                //Toast.makeText(this, English+" "+Bangla, Toast.LENGTH_SHORT).show();
+
+                dictionary.put(English, Bangla);
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

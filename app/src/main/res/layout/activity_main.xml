@@ -29,6 +29,7 @@
         android:layout_height="150dp"
         android:layout_below="@+id/button_search"
         android:text="Hello World!"
+        android:scrollbars="vertical"
         android:id="@+id/meaning_display_text"
         android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
