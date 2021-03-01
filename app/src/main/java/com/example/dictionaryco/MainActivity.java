@@ -7,6 +7,7 @@ import android.content.Context;
 import android.icu.util.LocaleData;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editText;
     Button searchButton;
     String jString;
+    String englishWord;
     JSONObject reader;
     JSONArray wordList;
 
@@ -52,15 +54,26 @@ public class MainActivity extends AppCompatActivity {
         jString = loadJSONFromAsset();
         loadDictionary(jString);
 
+        initHash();
+
+        englishWord = editText.getText().toString().toUpperCase();
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String banglaWord = perfectHash.Lookup(englishWord);
+                textView.setText(banglaWord);
+            }
+        });
+
+
+
+
+
+    }
+
+    private void initHash(){
         perfectHash = new PerfectHash(dictionary);
         perfectHash.CreateMinimalPerfectHash();
-
-        textView.setText(perfectHash.Lookup("Rahat").toString());
-
-
-
-
-
     }
 
     public String loadJSONFromAsset() {
