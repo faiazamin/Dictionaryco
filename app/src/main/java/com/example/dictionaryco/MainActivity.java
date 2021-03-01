@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String englishWord = editText.getText().toString().toUpperCase();
-                String banglaWord = perfectHash.Lookup(englishWord);
+                String banglaWord = perfectHash.Lookup(englishWord.trim());
                 textView.setText(banglaWord);
             }
         });

@@ -141,7 +141,8 @@ public class PerfectHash {
     }
 
     public String Lookup(String key) {
-        Integer d = gValues.get(Hash(0, key, d_size));
+        if(gValues.get(Hash(0, key, d_size)) == null) return "Sorry, no meaning found for "+key;;
+        Integer d = (Integer) gValues.get(Hash(0, key, d_size));
         if (d < 0) {
             if(values.containsKey(-d-1))
             return values.get(-d - 1);
