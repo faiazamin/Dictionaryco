@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     EditText editText;
     Button searchButton;
     String jString;
-    String englishWord;
     JSONObject reader;
     JSONArray wordList;
 
@@ -50,16 +49,19 @@ public class MainActivity extends AppCompatActivity {
         //file = new File(this.getFilesDir(),FILE_NAME);
         dictionary = new HashMap<String, String>();
         textView =  (TextView) findViewById(R.id.meaning_display_text);
+        editText = (EditText) findViewById(R.id.edit_text_english);
+        searchButton = (Button) findViewById(R.id.button_search);
 
         jString = loadJSONFromAsset();
         loadDictionary(jString);
 
         initHash();
 
-        englishWord = editText.getText().toString().toUpperCase();
+
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String englishWord = editText.getText().toString().toUpperCase();
                 String banglaWord = perfectHash.Lookup(englishWord);
                 textView.setText(banglaWord);
             }
