@@ -7,6 +7,8 @@ import android.content.Context;
 import android.icu.util.LocaleData;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     HashMap<String,String> dictionary;
     File file ;
     TextView textView;
+    EditText editText;
+    Button searchButton;
     String jString;
     JSONObject reader;
     JSONArray wordList;
@@ -42,11 +46,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //file = new File(this.getFilesDir(),FILE_NAME);
-        textView =  (TextView) findViewById(R.id.main_text);
+        textView =  (TextView) findViewById(R.id.meaning_display_text);
         jString = loadJSONFromAsset();
 
         try {
-            reader = new JSONObject();
+            reader = new JSONObject(jString);
             wordList =  (JSONArray) reader.getJSONArray("dictionary");
             Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
             for(int i=0; i < wordList.length(); i++){
