@@ -143,10 +143,14 @@ public class PerfectHash {
     public String Lookup(String key) {
         Integer d = gValues.get(Hash(0, key, d_size));
         if (d < 0) {
+            if(values.containsKey(-d-1))
             return values.get(-d - 1);
+            else return "Sorry, no meaning found for "+key;
         }
+        if(values.containsKey(Hash(d, key, (d_size * 3))))
+            return values.get(Hash(d, key, (d_size * 3)));
+        else return "Sorry, no meaning found for "+key;
 
-        return values.get(Hash(d, key, (d_size * 3)));
     }
 
 
