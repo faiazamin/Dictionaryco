@@ -56,6 +56,7 @@ public class PerfectHash {
             ArrayList<String> a = new ArrayList<String>();
             buckets.add(a);
         }
+        // Compute first level hash
         for (Map.Entry<String, String> pair : dictionary.entrySet()) {
             buckets.get(Hash(0, pair.getKey(), sz)).add(pair.getKey());
         }
@@ -85,15 +86,19 @@ public class PerfectHash {
         HashMap<Integer, Boolean> slotsselected = new HashMap<Integer, Boolean>();
         initiateBuckets();
 
+        // Sort  according to the buckets with most elements
         Collections.sort(buckets, new ListComparator());
 
         Integer lengthOne = 0;
 
         for (Integer i = 0; i < sz; i++) {
+            // handle buckets that has more than one element.
             ArrayList<String> bucket = buckets.get(i);
             if (bucket.size() <= 1) {
                 break;
             }
+            //compute second level hash.
+            // search for a d such that all tha element in bucket gets an unoccupied slot.
             Integer d = 1;
             Integer items = 0;
             ArrayList<Integer> slots = new ArrayList<Integer>();
@@ -120,20 +125,23 @@ public class PerfectHash {
             lengthOne = i;
         }
 
-        // buckets.forEach(k ->{ System.out.println(k.size());});
 
+
+        // List all the empty slots.
         ArrayList<Integer> freeslot = new ArrayList<Integer>();
         for (Integer i = 0; i < (sz * 3); i++) {
             if (values.get(i) == null) {
                 freeslot.add(i);
             }
         }
-
+        // now put all the bucket that has only one element in one of the free slots
+        // put negetive value of slots into gValues to easily identyfy them.
         for (Integer i = lengthOne + 1; i < sz; i++) {
             ArrayList<String> bucket = buckets.get(i);
             if (bucket.size() == 0) {
                 break;
             }
+            // -freeslot[i-1] - 1 so that we can use 0(zero) also
             gValues.put(Hash(0, bucket.get(0), sz), -freeslot.get(i) - 1);
             values.put(freeslot.get(i), dictionary.get(bucket.get(0)));
         }
